@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import CityForm from './pages/CityForm';
+import WeatherData from './pages/WeatherData';
+
+import { useAlert } from "react-alert";
 import './App.css';
 
-function App() {
+
+
+const App = () => {
+  const [data, setData] = useState({ });
+  const [isCitySelected, setIsCitySelected] = useState(false);
+
+  const alert = useAlert();
+  
+  const getData = async (city) => {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4dea29c935cb5079d358c90a7dba576f`;
+
+    if(city) {
+      const response = await fetch(url);
+      const weatherData = await response.json();
+
+      if(!weatherData.name) {
+        alert.error("Введіть коректне місто!")
+      }
+      else {
+        setData({ ...weatherData });
+        setIsCitySelected(true);
+      }
+    }
+    else {
+      alert.error("Введіть місто!");
+    }
+  }
+
+  const goBack = () => {
+    setIsCitySelected(false);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {isCitySelected ? <WeatherData data={data} getData={getData} goBack={goBack} /> : <CityForm getData={getData} />}
+    </>
   );
 }
 

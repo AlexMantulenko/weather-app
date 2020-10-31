@@ -4,10 +4,23 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+
+const options = {
+  position: positions.TOP_RIGHT,
+  timeout: 3000,
+  offset: '20px',
+  transition: transitions.SCALE
+}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <AlertProvider template={AlertTemplate} {...options}>
+     <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </AlertProvider>,
   document.getElementById('root')
 );
 
