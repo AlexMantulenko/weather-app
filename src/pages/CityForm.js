@@ -3,10 +3,8 @@ import './CityForm.css';
 
 const CityForm = ({ getData }) => {
   const [city, setCity] = useState('');
-
-  const handlerCity = e => {
-    setCity(e.target.value);
-  }
+  
+  const handlerCity = e => setCity(e.target.value);
 
   return (
     <div className="form-page">

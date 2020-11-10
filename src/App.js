@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import CityForm from './pages/CityForm';
 import WeatherData from './pages/WeatherData';
-
 import { useAlert } from "react-alert";
 import './App.css';
-
-
 
 const App = () => {
   const [data, setData] = useState({ });
@@ -33,9 +30,7 @@ const App = () => {
     }
   }
 
-  const goBack = () => {
-    setIsCitySelected(false);
-  }
+  const goBack = () => setIsCitySelected(false);
 
   return (
     <>

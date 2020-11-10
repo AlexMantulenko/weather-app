@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
-import {FaTachometerAlt, FaTint, FaArrowLeft, FaSync, FaTemperatureLow, FaTemperatureHigh } from "react-icons/fa";
-
+import { FaTachometerAlt, FaArrowLeft, FaSync, FaTemperatureLow, FaTemperatureHigh } from "react-icons/fa";
 import { FiSunrise, FiSunset } from "react-icons/fi";
 import { useAlert } from "react-alert";
-
 import { BsDropletFill } from "react-icons/bs";
-
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
-
 import './WeatherData.css';
 
 let forecast = [], categories = [];
 
 const WeatherData = ({ data, getData, goBack }) => {
   const [rotation, setRotation] = useState(0);
-
   const [daysForecast, setDaysForecast] = useState([]);
-
-  const [selected, setSelected] = useState('');
-
-  const [dayTemp, setDayTemp] = useState({
-    min: '',
-    max: ''  
-  })
-
+  const [selected, setSelected] = useState(0);
+  const [dayTemp, setDayTemp] = useState({ min: '', max: '' });
   const alert = useAlert();
 
   const [options, setOptions] = useState({
@@ -113,14 +102,11 @@ const WeatherData = ({ data, getData, goBack }) => {
     }
 
     setDaysForecast([...days]);
-
-    console.log(daysForecast)
-
     
     let firstDay = uniqueDays[day];
     let dayForecast = list.filter(item => {
       let date = new Date(item.dt)
-      return (addZero(date.getDate()) + "." + addZero(date.getMonth() + 1)) == firstDay;
+      return (addZero(date.getDate()) + "." + addZero(date.getMonth() + 1)) === firstDay;
     });
 
     let hours = [];
@@ -131,7 +117,6 @@ const WeatherData = ({ data, getData, goBack }) => {
     });
 
     setDayTemp({ min: Math.min(...forecast), max: Math.max(...forecast) });
-
 
     setOptions({ 
       chartOptions: { 
@@ -165,12 +150,10 @@ const WeatherData = ({ data, getData, goBack }) => {
               <FaSync 
                 size={26} 
                 color="white" 
-                style={
-                  { 
-                    transform: `rotate(${rotation}deg)`,
-                    transition: '1s ease'
-                  }
-                }
+                style={{ 
+                  transform: `rotate(${rotation}deg)`,
+                  transition: '1s ease'
+                }}
               />
             </button>
         </div>
@@ -226,7 +209,7 @@ const WeatherData = ({ data, getData, goBack }) => {
                 <FaTachometerAlt size={56} />
                 <div>
                   <p>Pressure</p>
-                  <p>{data.main.pressure} Torr</p>
+                  <p>{(data.main.pressure / 1.333).toFixed(2)} Torr</p>
                 </div>
               </div>
 
@@ -258,7 +241,7 @@ const WeatherData = ({ data, getData, goBack }) => {
               </div>
               <ul className="days">
                 {daysForecast.map((item, i) => {
-                  return <li key={i} style={{ backgroundColor: selected == i ? 'rgb(140, 140, 140)' : 'inherit' }} onClick={() => {
+                  return <li key={i} style={{ backgroundColor: selected === i ? 'rgb(140, 140, 140)' : 'inherit' }} onClick={() => {
                     changeColor(i);
                     getWeatherForecast(i);
                   }}>{item.name}</li>

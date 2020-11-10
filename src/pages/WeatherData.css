@@ -85,8 +85,6 @@
     font-size: 24px;
 }
 
-
-
 .sunrise, .sunset, .humidity, .pressure {
     display: flex;
     flex-direction: row;
@@ -100,7 +98,6 @@
 .sunrise div p, .sunset div p {
     font-size: 20px;
 } 
-
 
 .days {
     width: 100%;
@@ -130,7 +127,3 @@
         height: 100%;
     }
 }
-
-
-
-
